@@ -5,6 +5,35 @@ void error(string word1, string word2, string msg){
 }
 bool edit_distance_within(const std::string& str1, const std::string& str2, int d){
     // cout << str1 << ' ' << str2 << endl;
+    if (d < 2){ //optimization for adjacent
+        // cout << " d < 2 " << endl;
+        int m = str1.size();
+        int n = str2.size();
+        if (abs(m-n) > 1) return false;
+        int dist = 0;
+        // cout << " distance within range " << endl;
+        if (m-n == 0) {
+            // cout << " equal length for loop " << endl;
+            for (int i = 0; i < m; ++i) {
+                if (str1[i] != str2[i]) ++dist;
+                if (dist > 1) return false;
+            }
+            return true;
+        }
+        else if (m-n > 0) {
+            for (int i = 0; i < n; ++i) {
+                if (str1[i + dist] != str2[i]) ++dist;
+                if (str1[i + dist] != str2[i]) {++dist; break;}
+            }
+            return dist < 2;
+        }
+        for (int i = 0; i < n; ++i){
+            if (str1[i] != str2[i + dist]) ++dist;
+            if (str1[i + dist] != str2[i]) {++dist; break;}
+        }
+        return dist < 2;
+
+    }
     int m = str1.size() + 1;
     int n = str2.size() + 1;
     // cout << m << ' ' << n << endl;
@@ -31,7 +60,7 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
     //     for (int j = 0; j < n; ++j) cout << dist[i][j] << ' ';
     //     cout << endl;
     // }
-    return dist[-1][-1] <= d;
+    return dist[m-1][n-1] <= d;
 }
 bool is_adjacent(const string& word1, const string& word2){
     // cout << "called" << endl;
