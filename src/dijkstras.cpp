@@ -74,7 +74,6 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
         stk.push(destination);
         destination = previous[destination];
     }
-    stk.push(0);
 
     vector<int> res;
     while (!stk.empty()){
