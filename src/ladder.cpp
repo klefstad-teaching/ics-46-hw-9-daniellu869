@@ -22,16 +22,22 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
         }
         else if (m-n > 0) {
             for (int i = 0; i < n; ++i) {
-                if (str1[i + dist] != str2[i]) ++dist;
-                if (str1[i + dist] != str2[i]) {++dist; break;}
+                if (str1[i + dist] != str2[i]) {
+                    ++dist;
+                    --i;
+                    if (dist > 1) return false;
+                }
             }
             return dist < 2;
         }
         for (int i = 0; i < n; ++i){
-            if (str1[i] != str2[i + dist]) ++dist;
-            if (str1[i + dist] != str2[i]) {++dist; break;}
+            if (str1[i] != str2[i + dist]) {
+                ++dist;
+                --i;
+                if (dist > 1) return false;
+            }
         }
-        return dist < 2;
+        return true;
 
     }
     int m = str1.size() + 1;
@@ -106,4 +112,17 @@ void load_words(set<string> & word_list, const string& file_name){
 }
 void print_word_ladder(const vector<string>& ladder){
     for (const string& word: ladder) cout << word << endl;
+}
+
+#define my_assert(e) {cout << #e << ((e) ? " passed": " failed") << endl;}
+void verify_word_ladder() {
+    set<string> word_list;
+    load_words(word_list, "words.txt");
+    my_assert(generate_word_ladder("cat", "dog", word_list).size() == 4);
+    my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
+    my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
+    my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
+    my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
+    my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
+
 }
