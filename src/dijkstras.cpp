@@ -70,19 +70,22 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     //             pq.push(Node(v, graph.distance[v]))
 }
 vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination){
-    vector<int> res;
+    stack<int> stk;
     while (destination){
-        res.push_back(destination);
+        stk.push(destination);
         destination = previous[destination];
     }
-    res.push_back(0);
+    stk.push(0);
+
+    vector<int> res;
+    while (!stk.empty()){
+        res.push_back(stk.top());
+        stk.pop();
+    }
     return res;
 }
 void print_path(const vector<int>& v, int total){
-    int n = v.size() - 1;
-    for (; n >= 0; --n){
-        cout << v[n] << ' ';
-    }
+    for (const int& vertex : v) cout << vertex << ' ';
     cout << endl;
     cout << "Total cost is " << total << endl;
 }

@@ -31,7 +31,7 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
     //     for (int j = 0; j < n; ++j) cout << dist[i][j] << ' ';
     //     cout << endl;
     // }
-    return dist[m-1][n-1] <= d;
+    return dist[-1][-1] <= d;
 }
 bool is_adjacent(const string& word1, const string& word2){
     // cout << "called" << endl;
