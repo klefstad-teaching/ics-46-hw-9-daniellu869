@@ -14,9 +14,9 @@ void verify_word_ladder_main() {
     // auto ladder = generate_word_ladder("cat", "dog", word_list);
     // for (string& word: ladder) cout << word << " ";
     // cout << "passed" << endl;
-    // my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
+    my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
 
-    // my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
+    my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
 
     auto ladder = generate_word_ladder("work", "play", word_list);
     for (string& word: ladder) cout << word << " ";
@@ -28,6 +28,7 @@ void verify_word_ladder_main() {
 }
 
 int main(){
+    verify_word_ladder();
     verify_word_ladder_main();
     return 0;
 }
