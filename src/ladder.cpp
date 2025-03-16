@@ -66,7 +66,7 @@ bool edit_distance_within(const std::string& str1, const std::string& str2, int 
     //     for (int j = 0; j < n; ++j) cout << dist[i][j] << ' ';
     //     cout << endl;
     // }
-    return dist[-1][-1] <= d;
+    return dist[m-1][n-1] <= d;
 }
 bool is_adjacent(const string& word1, const string& word2){
     // cout << "called" << endl;
@@ -111,18 +111,23 @@ void load_words(set<string> & word_list, const string& file_name){
     }
 }
 void print_word_ladder(const vector<string>& ladder){
-    for (const string& word: ladder) cout << word << endl;
+    if (!ladder.size()) {
+        cout << "No word ladder found" << endl;
+        return;
+    }
+    cout << "Word ladder found: ";
+    for (const string& word: ladder) cout << word << ' ';
 }
 
-// #define my_assert(e) {cout << #e << ((e) ? " passed": " failed") << endl;}
-// void verify_word_ladder() {
-//     set<string> word_list;
-//     load_words(word_list, "words.txt");
-//     my_assert(generate_word_ladder("cat", "dog", word_list).size() == 4);
-//     my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
-//     my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
-//     my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
-//     my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
-//     my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
+#define my_assert(e) {cout << #e << ((e) ? " passed": " failed") << endl;}
+void verify_word_ladder() {
+    set<string> word_list;
+    load_words(word_list, "words.txt");
+    my_assert(generate_word_ladder("cat", "dog", word_list).size() == 4);
+    my_assert(generate_word_ladder("marty", "curls", word_list).size() == 6);
+    my_assert(generate_word_ladder("code", "data", word_list).size() == 6);
+    my_assert(generate_word_ladder("work", "play", word_list).size() == 6);
+    my_assert(generate_word_ladder("sleep", "awake", word_list).size() == 8);
+    my_assert(generate_word_ladder("car", "cheat", word_list).size() == 4);
 
-// }
+}
